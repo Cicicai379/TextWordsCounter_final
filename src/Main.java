@@ -13,7 +13,9 @@ public class Main {
 
         words = textToWord.getWords();
         words2 = textToWord2.getWords();
-
+//        for(String e: words){
+//            if(e.contains("into")) System.out.println(e);
+//        }
         Check check = new Check(words);
         check.storeEveryNewWord();
         words = check.getNewWords();
@@ -22,7 +24,7 @@ public class Main {
         check2.storeEveryNewWord();
         words2 = check2.getNewWords();
 
-
+        System.out.println("___________ 1984___________");
         Count counter = new Count(words);
         counter.calculateCnt();
         String[] topOccurrences = counter.topFive();

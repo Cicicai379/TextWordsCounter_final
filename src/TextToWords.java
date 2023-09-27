@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -25,13 +26,14 @@ public class TextToWords {
     }
 
     public void convertWordsToList() {
-        words = new ArrayList<>();
-        StringTokenizer tokenizer = new StringTokenizer(text, " .,:;?!-()\n\t\"\'");
-
-        while (tokenizer.hasMoreTokens()) {
-            String word = tokenizer.nextToken().toLowerCase();
-            words.add(word);
+        String cleanedText = text.replaceAll("[^a-zA-Z' ]", "");
+        String[] wordArray = cleanedText.split("\\s+");
+        ArrayList<String> words = new ArrayList<>(Arrays.asList(wordArray));
+        for (int i = 0; i < words.size(); i++) {
+            String word = words.get(i);
+            words.set(i, word.toLowerCase());
         }
+        this.words = words;
     }
 
 }
