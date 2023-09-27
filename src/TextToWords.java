@@ -9,12 +9,11 @@ public class TextToWords {
     private String text;
 
     public TextToWords(String filename) {
-        text = ""; // Initialize the text variable
-
+        text = "";
         try (Scanner scanner = new Scanner(new File(filename))) {
             while (scanner.hasNextLine()) {
                 text += scanner.nextLine();
-                text += " "; // Add a space between words
+                text += " ";
             }
         } catch (Exception e) {
             System.out.println("An error occurred while reading the file: " + e.getMessage());
@@ -26,14 +25,36 @@ public class TextToWords {
     }
 
     public void convertWordsToList() {
-        String cleanedText = text.replaceAll("[^a-zA-Z' ]", "");
-        String[] wordArray = cleanedText.split("\\s+");
-        ArrayList<String> words = new ArrayList<>(Arrays.asList(wordArray));
+        ArrayList<String> words = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        boolean isWord = false;
+
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            if (Character.isLetter(c)) {
+                sb.append(c);
+                isWord = true;
+            } else if (isWord && c == '\'') {
+                sb.append(c);
+            } else {
+                if (sb.length() > 0) {
+                    words.add(sb.toString());
+                    sb.setLength(0);
+                }
+                isWord = false;
+            }
+        }
+
+        if (sb.length() > 0) {
+            words.add(sb.toString());
+        }
+
         for (int i = 0; i < words.size(); i++) {
             String word = words.get(i);
+            System.out.println(word);
             words.set(i, word.toLowerCase());
         }
+
         this.words = words;
     }
-
 }
